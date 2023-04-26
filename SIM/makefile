@@ -38,8 +38,6 @@ compile_postsynth: clean
 	-sdf max:test_top.dut:$(sdfPath)/AV_LH_mode_lt_cbest_hold.sdf +csdf+precompile \
 	-timescale=1ns/10ps +lint=TFIPC-L -l $(srcPath)/work/sim/top_synth.log 
 	
-
-
 nc_gui: 
 	reset; \
 	ncverilog +sv -f files_verilog.f  \
@@ -49,4 +47,4 @@ nc_gui:
 nc: 
 	reset; \
 	ncverilog +sv -f files_verilog.f  \
-	+nc64bit +nctimescale+1ns/10ps +access+rwc -ALLOWREDEFINITION \
+	+nc64bit +nctimescale+1ns/10ps +access+rwc -ALLOWREDEFINITION
