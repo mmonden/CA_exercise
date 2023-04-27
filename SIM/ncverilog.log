@@ -1,5 +1,5 @@
 ncverilog(64): 15.20-s058: (c) Copyright 1995-2018 Cadence Design Systems, Inc.
-TOOL:	ncverilog	15.20-s058: Started on Apr 27, 2023 at 08:47:56 CEST
+TOOL:	ncverilog	15.20-s058: Started on Apr 27, 2023 at 12:24:57 CEST
 ncverilog
 	+sv
 	-f files_verilog.f
@@ -21,58 +21,50 @@ ncverilog
 	+nctimescale+1ns/10ps
 	+access+rwc
 	-ALLOWREDEFINITION
+Recompiling... reason: file '../Verilog/RTL/cpu.v' is newer than expected.
+	expected: Thu Apr 27 12:23:24 2023
+	actual:   Thu Apr 27 12:24:53 2023
 file: ../Verilog/RTL/cpu.v
 	module worklib.cpu:v
 		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
+		Caching library 'worklib' ....... Done
 ncelab: *W,DSEMEL: This SystemVerilog design will be simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
+	.dreg1_ID_EX_input      (regfile_rdata_1),
+	                                       |
+ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,130|40): port sizes differ in port connection (64/32).
+	.dreg2_ID_EX_input      (regfile_rdata_2),
+	                                       |
+ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,131|40): port sizes differ in port connection (64/32).
+	.inst2_ID_EX_output		(inst2_ID_EX),
+	                   		           |
+ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,152|33): port sizes differ in port connection (5/32).
+	.aluout_MEM_WB_input		(alu_out_EX_MEM),
+	                    		              |
+ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,202|37): port sizes differ in port connection (64/32).
+	.memreg_MEM_WB_input		(mem_data),
+	                    		        |
+ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,203|31): port sizes differ in port connection (64/32).
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.alu:v <0x6f856b8c>
-			streams:   6, words:  5392
-		worklib.alu_control:v <0x493c55e7>
-			streams:   3, words:   945
-		worklib.branch_unit:v <0x7b2dad56>
-			streams:   1, words:   490
-		worklib.control_unit:v <0x4975d31c>
-			streams:   1, words:  6521
-		worklib.cpu:v <0x6dbb951a>
-			streams:   9, words:  1229
-		worklib.cpu_tb:v <0x784a3d35>
+		worklib.cpu:v <0x56156509>
+			streams:  11, words:  1521
+		worklib.cpu_tb:v <0x5989d575>
 			streams:  27, words: 53827
-		worklib.immediate_extend_unit:v <0x013d814d>
-			streams:   2, words:  3075
-		worklib.mux_2:v <0x69a21794>
-			streams:   1, words:   432
-		worklib.pc:v <0x35693a5f>
-			streams:   5, words:  1517
-		worklib.reg_arstn:v <0x3ac60968>
-			streams:   3, words:   647
-		worklib.reg_arstn_en:v <0x3ac8d28d>
-			streams:   3, words:  1033
-		worklib.register_file:v <0x30099580>
-			streams:   5, words: 28015
-		worklib.sky130_sram_2rw_32x128_32:v <0x267a8811>
-			streams:   6, words:  3376
-		worklib.sky130_sram_2rw_64x128_64:v <0x534a7e48>
-			streams:   6, words:  4723
-		worklib.sram_BW32:v <0x157955a7>
-			streams:  10, words:  4691
-		worklib.sram_BW64:v <0x283d3d6f>
-			streams:  10, words:  4841
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                  Instances  Unique
-		Modules:                 19      16
-		Registers:              108     105
-		Scalar wires:            33       -
-		Vectored wires:          47       -
-		Always blocks:           42      39
+		Modules:                 23      20
+		Registers:              168     165
+		Scalar wires:            47       -
+		Expanded wires:         288       5
+		Vectored wires:          60       -
+		Always blocks:           50      47
 		Initial blocks:           3       3
-		Cont. assignments:        2       5
-		Pseudo assignments:      37      37
+		Cont. assignments:        5      35
+		Pseudo assignments:      39      39
 		Simulation timescale:  10ps
 	Writing initial simulation snapshot: worklib.reg_arstn:v
 Loading snapshot worklib.reg_arstn:v .................... Done
@@ -89,4 +81,4 @@ Mult2 Working Correctly
 Simulation complete via $finish(1) at time 32450 NS + 8
 ../Verilog/cpu_tb.v:324    $finish;
 ncsim> exit
-TOOL:	ncverilog	15.20-s058: Exiting on Apr 27, 2023 at 08:47:58 CEST  (total: 00:00:02)
+TOOL:	ncverilog	15.20-s058: Exiting on Apr 27, 2023 at 12:24:58 CEST  (total: 00:00:01)
