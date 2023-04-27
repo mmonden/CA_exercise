@@ -41,7 +41,9 @@ module alu #(
 	reg 	               overflow_add,overflow_sub,
                            msb_equal_flag;
    
-	reg signed[2*DATA_W-1:0] Acc, mul_out;
+	reg signed[2*DATA_W-1:0] Acc;
+	
+	integer i;
    
    //ZERO FLAG 
    //
@@ -64,10 +66,19 @@ module alu #(
       sll_out  =   alu_in_0 << alu_in_1;
       srl_out  =   alu_in_0 >> alu_in_1;
       sub_out  =   alu_in_0 - alu_in_1;
-	   mul_out =    alu_in_0 * alu_in_1;
       and_out  =   alu_in_0 & alu_in_1;
       or_out   =   alu_in_0 | alu_in_1;
       slt_out  =  (alu_in_0 < alu_in_1) ? 1:0;        //Zero extend the 1 bit slt flag to a DATA_W bit value
+	  Acc = 0;
+	  N = alu_in_0;
+	   for(i = 0; i < 16; i = i + 1) begin
+		   if(alu_in_1[i] == 1'd1) Acc <= Acc + N;
+			  
+		   end
+		   N <= N << 1;
+	   end
+	
+	   mul_out = Acc;
    end
 
    //This block will translate into a multiplexer, where alu_ctrl
