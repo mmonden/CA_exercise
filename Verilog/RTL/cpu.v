@@ -307,7 +307,7 @@ mux_2 #(
 	.DATA_W(64)
 ) regfile_data_mux (
 	.input_a  (mem_data     ),
-	.input_b  (alu_out      ),
+	.input_b  (alu_out_EX_MEM),
 	.select_a (mem_2_reg    ),
 	.mux_out  (regfile_wdata)
 );
