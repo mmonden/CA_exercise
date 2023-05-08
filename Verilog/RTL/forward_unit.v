@@ -3,7 +3,7 @@ module forward_unit #(
    )(
 	input wire writeback1_EX_MEM_output,	
     input wire writeback1_MEM_WB_output,	
-    input wire[3:0] inst1_ID_EX_output,     // rs2
+    input wire [3:0] inst1_ID_EX_output,     // rs2
     input wire [63:0] inst_imm_ID_EX_output, // rs1
 
     input wire [4:0] inst2_EX_MEM_output,    // rd
