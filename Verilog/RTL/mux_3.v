@@ -1,13 +1,13 @@
 module mux_3
   #(
-   parameter integer DATA_W = 32
+   parameter integer DATA_W = 64
    )(
       input wire [DATA_W-1:0] input_reg,
-      input wire [2*DATA_W-1:0] input_alu,
+      input wire [DATA_W-1:0] input_alu,
       input wire [DATA_W-1:0] input_wb,
       input wire [1:0]        select_fwunit,
 
-      output reg  [2*DATA_W-1:0] mux_out
+      output reg  [DATA_W-1:0] mux_out
    );
 
    always@(*)begin

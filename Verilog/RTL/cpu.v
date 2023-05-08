@@ -111,7 +111,7 @@ wire [3:0] inst1_ID_EX;
 wire [4:0] inst2_ID_EX, inst2_EX_MEM, inst2_MEM_WB;
 
 wire [1:0]	mux_control_A, mux_control_B;
-wire [31:0]	mux_output_A, mux_output_B;
+wire [63:0]	mux_output_A, mux_output_B;
 
 reg_arstn_en_IF_ID #(
 	.DATA_W(32)
