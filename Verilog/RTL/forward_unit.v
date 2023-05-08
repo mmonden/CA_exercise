@@ -9,8 +9,8 @@ module forward_unit #(
     input wire [4:0] inst2_EX_MEM_output,    // rd
     input wire [4:0] inst2_MEM_WB_output,    // rd
 
-	output  reg mux_bottom,
-    output  reg mux_top
+	output wire [1:0] mux_bottom,
+    output wire [1:0] mux_top
    );
 
     always@(*) begin
