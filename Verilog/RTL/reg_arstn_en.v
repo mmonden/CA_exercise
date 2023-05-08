@@ -46,7 +46,7 @@ module reg_arstn_en_ID_EX #(
 		input clk,      
 		input arst_n,    
 		input [63:0] dreg1_ID_EX_input,     
-		input [31:0] dreg2_ID_EX_input,     
+		input [63:0] dreg2_ID_EX_input,     
 		input [63:0] inst_imm_ID_EX_input,
 		input [3:0] inst1_ID_EX_input,	
 		input [4:0] inst2_ID_EX_input,	
@@ -64,7 +64,7 @@ module reg_arstn_en_ID_EX #(
 
 		//	Output
 		output [63:0] dreg1_ID_EX_output,      
-		output [31:0] dreg2_ID_EX_output,      
+		output [63:0] dreg2_ID_EX_output,      
 		output [63:0] inst_imm_ID_EX_output, 
 		output [3:0] inst1_ID_EX_output, 	
 		output [4:0] inst2_ID_EX_output, 	
