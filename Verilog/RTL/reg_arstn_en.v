@@ -178,7 +178,7 @@ module reg_arstn_en_EX_MEM#(
 		input [63:0] branchpc_EX_MEM_input,	
 		input zero_EX_MEM_input,		
 		input [63:0] aluout_EX_MEM_input,		
-		input [31:0] dreg2_EX_MEM_input,		
+		input [63:0] dreg2_EX_MEM_input,		
 		input [4:0] inst2_EX_MEM_input,	
 
 		//	Control 
