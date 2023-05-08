@@ -82,13 +82,13 @@ module reg_arstn_en_ID_EX #(
 	reg [1:0] temp_aluop;
 	reg [3:0] temp_inst1;
 	reg [4:0] temp_inst2; 
-	reg [2*DATA_W-1:0] temp_dreg1, temp_dreg2, temp_pc, temp_inst_imm;
+	reg [63:0] temp_dreg1, temp_dreg2, temp_pc, temp_inst_imm;
 
 	reg r_writeback1, r_writeback2, r_memwrite, r_memread, r_membranch, r_alusrc;
 	reg [1:0] r_aluop;
 	reg [3:0] r_inst1;
 	reg [4:0] r_inst2; 
-	reg [2*DATA_W-1:0] r_dreg1, r_dreg2, r_pc, r_inst_imm;
+	reg [63:0] r_dreg1, r_dreg2, r_pc, r_inst_imm;
 
 	always@(*) begin
 		if(arst_n==0)begin
@@ -295,17 +295,17 @@ module reg_arstn_en_MEM_WB #(
 		output writeback1_MEM_WB_output,	
 		output writeback2_MEM_WB_output,	
 		output [63:0] aluout_MEM_WB_output,		
-		output [31:0] memreg_MEM_WB_output,		
+		output [63:0] memreg_MEM_WB_output,		
 		output [4:0] inst2_MEM_WB_output
    );
 
 	reg temp_writeback1, temp_writeback2;
 	reg [4:0] temp_inst2;
-	reg [2*DATA_W - 1:0] temp_aluout, temp_memreg;
+	reg [63:0] temp_aluout, temp_memreg;
 
 	reg r_writeback1, r_writeback2;
 	reg [4:0] r_inst2;
-	reg [2*DATA_W - 1:0] r_aluout, r_memreg;
+	reg [63:0] r_aluout, r_memreg;
 
    always@(posedge clk, negedge arst_n)begin
 		if(arst_n==0)begin
