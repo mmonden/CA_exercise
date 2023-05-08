@@ -192,7 +192,7 @@ module reg_arstn_en_EX_MEM#(
 		//	Output
 		output [63:0] dreg2_EX_MEM_output,      
 		output [63:0] branchpc_EX_MEM_output,	
-		output [31:0] aluout_EX_MEM_output,		
+		output [63:0] aluout_EX_MEM_output,		
 		output zero_EX_MEM_output,				
 		output writeback1_EX_MEM_output,	
 		output writeback2_EX_MEM_output,	
