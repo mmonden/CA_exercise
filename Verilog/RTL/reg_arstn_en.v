@@ -281,7 +281,7 @@ module reg_arstn_en_MEM_WB #(
 		input clk,        
 		input arst_n,     
 		input [63:0] aluout_MEM_WB_input,		
-		input [63:0] memreg_MEM_WB_input,		
+		input [31:0] memreg_MEM_WB_input,		
 		input [4:0] inst2_MEM_WB_input,		
 		input en,         
 		
@@ -293,7 +293,7 @@ module reg_arstn_en_MEM_WB #(
 		output writeback1_MEM_WB_output,	
 		output writeback2_MEM_WB_output,	
 		output [63:0] aluout_MEM_WB_output,		
-		output [63:0] memreg_MEM_WB_output,		
+		output [31:0] memreg_MEM_WB_output,		
 		output [4:0] inst2_MEM_WB_output
    );
 
