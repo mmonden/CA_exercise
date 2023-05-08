@@ -45,8 +45,8 @@ module reg_arstn_en_ID_EX #(
 	  )(
 		input clk,      
 		input arst_n,    
-		input [31:0] dreg1_ID_EX_input,     
-		input [31:0] dreg2_ID_EX_input,     
+		input [63:0] dreg1_ID_EX_input,     
+		input [63:0] dreg2_ID_EX_input,     
 		input [63:0] inst_imm_ID_EX_input,
 		input [3:0] inst1_ID_EX_input,	
 		input [4:0] inst2_ID_EX_input,	
@@ -63,8 +63,8 @@ module reg_arstn_en_ID_EX #(
 		input en,
 
 		//	Output
-		output [31:0] dreg1_ID_EX_output,      
-		output [31:0] dreg2_ID_EX_output,      
+		output [63:0] dreg1_ID_EX_output,      
+		output [63:0] dreg2_ID_EX_output,      
 		output [63:0] inst_imm_ID_EX_output, 
 		output [3:0] inst1_ID_EX_output, 	
 		output [4:0] inst2_ID_EX_output, 	
@@ -177,8 +177,8 @@ module reg_arstn_en_EX_MEM#(
 		input arst_n,     
 		input [63:0] branchpc_EX_MEM_input,	
 		input zero_EX_MEM_input,		
-		input [31:0] aluout_EX_MEM_input,		
-		input [31:0] dreg2_EX_MEM_input,		
+		input [63:0] aluout_EX_MEM_input,		
+		input [63:0] dreg2_EX_MEM_input,		
 		input [4:0] inst2_EX_MEM_input,	
 
 		//	Control 
@@ -190,9 +190,9 @@ module reg_arstn_en_EX_MEM#(
 		input en,
 
 		//	Output
-		output [31:0] dreg2_EX_MEM_output,      
+		output [63:0] dreg2_EX_MEM_output,      
 		output [63:0] branchpc_EX_MEM_output,	
-		output [31:0] aluout_EX_MEM_output,		
+		output [63:0] aluout_EX_MEM_output,		
 		output zero_EX_MEM_output,				
 		output writeback1_EX_MEM_output,	
 		output writeback2_EX_MEM_output,	
@@ -280,7 +280,7 @@ module reg_arstn_en_MEM_WB #(
 	  )(
 		input clk,        
 		input arst_n,     
-		input [31:0] aluout_MEM_WB_input,		
+		input [63:0] aluout_MEM_WB_input,		
 		input [31:0] memreg_MEM_WB_input,		
 		input [4:0] inst2_MEM_WB_input,		
 		input en,         
@@ -292,7 +292,7 @@ module reg_arstn_en_MEM_WB #(
 		//	Output
 		output writeback1_MEM_WB_output,	
 		output writeback2_MEM_WB_output,	
-		output [32:0] aluout_MEM_WB_output,		
+		output [63:0] aluout_MEM_WB_output,		
 		output [31:0] memreg_MEM_WB_output,		
 		output [4:0] inst2_MEM_WB_output
    );
