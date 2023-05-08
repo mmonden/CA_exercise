@@ -81,18 +81,52 @@ module reg_arstn_en_ID_EX #(
 	reg temp_writeback1, temp_writeback2, temp_memwrite, temp_memread, temp_membranch, temp_alusrc;
 	reg [1:0] temp_aluop;
 	reg [DATA_W-1:0] temp_dreg1, temp_dreg2, temp_inst1, temp_inst2;
-	reg [63:0] temp_pc, temp_inst_imm;
+	reg [2*DATA_W - 1 : 0] temp_pc, temp_inst_imm;
 
 	reg r_writeback1, r_writeback2, r_memwrite, r_memread, r_membranch, r_alusrc;
 	reg [1:0] r_aluop;
 	reg [DATA_W-1:0] r_dreg1, r_dreg2, r_inst1, r_inst2;
-	reg [63:0] r_pc, r_inst_imm;
+	reg [2*DATA_W - 1 : 0] r_pc, r_inst_imm;
 
-   always@(posedge clk, negedge arst_n)begin
+	always@(*) begin
 		if(arst_n==0)begin
 			r_writeback1 <= PRESET_VAL;
 			r_writeback2 <= PRESET_VAL;
-			r_memwrite <= PRESET_VAL;
+			r_memwrite <= PRESET_VAL;// Configurable register for variable width with enable
+
+// module reg_arstn_en#(
+// parameter integer DATA_W     = 20,
+// parameter integer PRESET_VAL = 0
+//    )(
+//       input                  clk,
+//       input                  arst_n,
+//       input                  en,
+//       input  [ DATA_W-1:0]   din,
+//       output [ DATA_W-1:0]   dout
+// );
+
+// reg [DATA_W-1:0] r,nxt;
+
+// always@(posedge clk, negedge arst_n)begin
+//    if(arst_n==0)begin
+//       r <= PRESET_VAL;
+//    end else begin
+//       r <= nxt;
+//    end
+// end
+
+// always@(*) begin
+//    if(en == 1'b1)begin
+//       nxt = din;
+//    end else begin
+//       nxt = r;
+//    end
+// end
+
+// assign dout = r;
+
+// endmodule
+
 			r_memread <= PRESET_VAL;
 			r_membranch <= PRESET_VAL;
 			r_alusrc <= PRESET_VAL;
@@ -118,7 +152,7 @@ module reg_arstn_en_ID_EX #(
 			r_pc <= temp_pc;
 			r_inst_imm <= temp_inst_imm;
 		end
-   end
+	end
 
    always@(*) begin
 		if(en == 1'b1)begin
@@ -155,7 +189,8 @@ module reg_arstn_en_ID_EX #(
 	assign writeback1_ID_EX_output = r_writeback1;
 	assign writeback2_ID_EX_output = r_writeback2;
 	assign memwrite_ID_EX_output = r_memwrite;
-	assign memread_ID_EX_output = r_memread;
+	assign memread_ID_EX_output = r_memread;// Configurable register for variable width with enable
+
 	assign membranch_ID_EX_output = r_membranch;
 	assign alusrc_ID_EX_output = r_alusrc;
 	assign aluop_ID_EX_output = r_aluop;
@@ -342,4 +377,39 @@ module reg_arstn_en_MEM_WB #(
 	assign inst2_MEM_WB_output = r_inst2;
 	assign memreg_MEM_WB_output = r_memreg;
 	assign aluout_MEM_WB_output = r_aluout;
+endmodule
+
+// Configurable register for variable width with enable
+
+module reg_arstn_en#(
+parameter integer DATA_W     = 20,
+parameter integer PRESET_VAL = 0
+   )(
+      input                  clk,
+      input                  arst_n,
+      input                  en,
+      input  [ DATA_W-1:0]   din,
+      output [ DATA_W-1:0]   dout
+);
+
+reg [DATA_W-1:0] r,nxt;
+
+always@(posedge clk, negedge arst_n)begin
+   if(arst_n==0)begin
+      r <= PRESET_VAL;
+   end else begin
+      r <= nxt;
+   end
+end
+
+always@(*) begin
+   if(en == 1'b1)begin
+      nxt = din;
+   end else begin
+      nxt = r;
+   end
+end
+
+assign dout = r;
+
 endmodule

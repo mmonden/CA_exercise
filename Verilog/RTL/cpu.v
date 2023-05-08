@@ -104,10 +104,13 @@ sram_BW64 #(
 	.rdata_ext(rdata_ext_2    )
 );
 
-wire [31:0]	instruction_IF_ID, inst1_ID_EX, regfile_rdata_2_EX_MEM, mem_data_MEM_WB;
-wire [63:0] current_pc_IF_ID, regfile_rdata_1_ID_EX, regfile_rdata_2_ID_EX, immediate_extended_ID_EX, current_pc_ID_EX, branch_pc_EX_MEM, alu_out_EX_MEM, alu_out_MEM_WB;
+wire [31:0]	instruction_IF_ID, regfile_rdata_1_ID_EX, regfile_rdata_2_ID_EX, inst1_ID_EX, regfile_rdata_2_EX_MEM, mem_data_MEM_WB;
+wire [63:0] current_pc_IF_ID, immediate_extended_ID_EX, current_pc_ID_EX, branch_pc_EX_MEM, alu_out_EX_MEM, alu_out_MEM_WB;
 wire [1:0] alu_op_ID_EX;
 wire [4:0] inst2_ID_EX, inst2_EX_MEM, inst2_MEM_WB;
+
+wire [1:0]	mux_control_A, mux_control_B;
+wire [31:0]	mux_output_A, mux_output_B;
 
 reg_arstn_en_IF_ID #(
 	.DATA_W(32)
@@ -168,7 +171,7 @@ reg_arstn_en_EX_MEM #(
 	.branchpc_EX_MEM_input	(branch_pc),
 	.zero_EX_MEM_input		(zero_flag),
 	.aluout_EX_MEM_input		(alu_out),
-	.dreg2_EX_MEM_input		(regfile_rdata_2_ID_EX),
+	.dreg2_EX_MEM_input		(mux_output_B),
 	.inst2_EX_MEM_input		(inst2_ID_EX),
 
 	//	Control signals
@@ -250,11 +253,40 @@ alu_control alu_ctrl(
 	.alu_control    (alu_control       )
 );
 
+forward_unit #(
+	.DATA_W(64)
+) forward_unit_b(
+	.writeback1_EX_MEM_output	(reg_write_EX_MEM),	
+	.writeback1_MEM_WB_output	(reg_write_MEM_WB),	
+	.inst1_ID_EX_output			(inst1_ID_EX),    
+	.inst_imm_ID_EX_output		(immediate_extended_ID_EX),
+	.inst2_EX_MEM_output		(inst2_EX_MEM),   
+	.inst2_MEM_WB_output		(inst2_MEM_WB),   
+	.mux_bottom		(mux_control_B),
+	.mux_top		(mux_control_A)
+);
+
+mux_3 mux_A(
+	.input_reg		(regfile_rdata_1_ID_EX),
+	.input_alu		(alu_out_EX_MEM),
+	.input_wb		(regfile_wdata),
+	.select_fwunit	(mux_control_A),
+	.mux_out		(mux_output_A)
+);
+
+mux_3 mux_B(
+	.input_reg		(regfile_rdata_2_ID_EX),
+	.input_alu		(alu_out_EX_MEM),
+	.input_wb		(regfile_wdata),
+	.select_fwunit	(mux_control_B),
+	.mux_out		(mux_output_B)
+);
+
 mux_2 #(
 	.DATA_W(64)
 ) alu_operand_mux (
 	.input_a (immediate_extended),
-	.input_b (regfile_rdata_2    ),
+	.input_b (mux_output_B    ),
 	.select_a(alu_src           ),
 	.mux_out (alu_operand_2     )
 );
@@ -262,7 +294,7 @@ mux_2 #(
 alu#(
 	.DATA_W(64)
 ) alu(
-	.alu_in_0 (regfile_rdata_1 ),
+	.alu_in_0 (mux_output_A),
 	.alu_in_1 (alu_operand_2   ),
 	.alu_ctrl (alu_control     ),
 	.alu_out  (alu_out         ),
