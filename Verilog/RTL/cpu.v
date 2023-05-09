@@ -283,20 +283,20 @@ mux_3 mux_B(
 	.mux_out		(mux_output_B)
 );
 
-mux_2 #(
-	.DATA_W(64)
-) alu_operand_mux (
-	.input_a (immediate_extended),
-	.input_b (mux_output_B    ),
-	.select_a(alu_src           ),
-	.mux_out (alu_operand_2     )
-);
+// mux_2 #(
+// 	.DATA_W(64)
+// ) alu_operand_mux (
+// 	.input_a (immediate_extended),
+// 	.input_b (mux_output_B    ),
+// 	.select_a(alu_src           ),
+// 	.mux_out (alu_operand_2     )
+// );
 
 alu#(
 	.DATA_W(64)
 ) alu(
 	.alu_in_0 (mux_output_A),
-	.alu_in_1 (alu_operand_2   ),
+	.alu_in_1 (mux_output_B   ),
 	.alu_ctrl (alu_control     ),
 	.alu_out  (alu_out         ),
 	.zero_flag(zero_flag       ),
