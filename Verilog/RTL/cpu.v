@@ -92,7 +92,7 @@ sram_BW64 #(
 	.ADDR_W(10)
 ) data_memory(
 	.clk      (clk            ),
-	.addr     (alu_out        ),
+	.addr     (alu_out_EX_MEM ),
 	.wen      (mem_write      ),
 	.ren      (mem_read       ),
 	.wdata    (regfile_rdata_2),
