@@ -293,7 +293,7 @@ mux_2 #(
 alu#(
 	.DATA_W(64)
 ) alu(
-	.alu_in_0 (mux_output_A),
+	.alu_in_0 (regfile_rdata_1_ID_EX),			//muxoutputA
 	.alu_in_1 (alu_operand_2   ),
 	.alu_ctrl (alu_control     ),
 	.alu_out  (alu_out         ),
