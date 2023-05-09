@@ -216,7 +216,7 @@ reg_arstn_en_MEM_WB #(
 	.writeback1_MEM_WB_output		(reg_write_MEM_WB),
 	.writeback2_MEM_WB_output		(mem_2_reg_MEM_WB),
 	.aluout_MEM_WB_output		(alu_out_MEM_WB),
-	.memreg_MEM_WB_output	(mem_data_MEM_WB),
+	.memreg_MEM_WB_output		(mem_data_MEM_WB),
 	.inst2_MEM_WB_output		(inst2_MEM_WB)
 );
 
@@ -241,7 +241,7 @@ register_file #(
 	.reg_write(reg_write         ),
 	.raddr_1  (instruction[19:15]),
 	.raddr_2  (instruction[24:20]),
-	.waddr    (instruction[11:7] ),
+	.waddr    (inst2_MEM_WB		 ),
 	.wdata    (regfile_wdata     ),
 	.rdata_1  (regfile_rdata_1   ),
 	.rdata_2  (regfile_rdata_2   )
@@ -306,10 +306,10 @@ alu#(
 mux_2 #(
 	.DATA_W(64)
 ) regfile_data_mux (
-	.input_a  (mem_data     ),
-	.input_b  (alu_out_EX_MEM),
-	.select_a (mem_2_reg    ),
-	.mux_out  (regfile_wdata)
+	.input_a  (alu_out_MEM_WB	),
+	.input_b  (alu_out_EX_MEM	),
+	.select_a (mem_2_reg_MEM_WB	),
+	.mux_out  (regfile_wdata 	)
 );
 
 branch_unit#(
