@@ -48,8 +48,10 @@ module reg_arstn_en_ID_EX #(
 		input [63:0] dreg1_ID_EX_input,     
 		input [63:0] dreg2_ID_EX_input,     
 		input [63:0] inst_imm_ID_EX_input,
-		input [3:0] inst1_ID_EX_input,	
-		input [4:0] inst2_ID_EX_input,	
+		input [4:0] inst1_ID_EX_input,	
+		input [4:0] inst2_ID_EX_input,
+		input [4:0] IF_ID_rs1_input,
+		input [4:0] IF_ID_rs2_input,
 		input [63:0] pc_ID_EX_input,
 
 		//	Control
@@ -66,8 +68,10 @@ module reg_arstn_en_ID_EX #(
 		output [63:0] dreg1_ID_EX_output,      
 		output [63:0] dreg2_ID_EX_output,      
 		output [63:0] inst_imm_ID_EX_output, 
-		output [3:0] inst1_ID_EX_output, 	
-		output [4:0] inst2_ID_EX_output, 	
+		output [4:0] inst1_ID_EX_output, 	
+		output [4:0] inst2_ID_EX_output, 
+		output [4:0] IF_ID_rs1_output,
+		output [4:0] IF_ID_rs2_output,	
 		output [63:0] pc_ID_EX_output, 		
 		output writeback1_ID_EX_output, 
 		output writeback2_ID_EX_output, 
@@ -80,14 +84,14 @@ module reg_arstn_en_ID_EX #(
 
 	reg temp_writeback1, temp_writeback2, temp_memwrite, temp_memread, temp_membranch, temp_alusrc;
 	reg [1:0] temp_aluop;
-	reg [3:0] temp_inst1;
-	reg [4:0] temp_inst2; 
+	reg [4:0] temp_inst1;
+	reg [4:0] temp_inst2, temp_IF_ID_rs1_output, temp_IF_ID_rs2_output; 
 	reg [63:0] temp_dreg1, temp_dreg2, temp_pc, temp_inst_imm;
 
 	reg r_writeback1, r_writeback2, r_memwrite, r_memread, r_membranch, r_alusrc;
 	reg [1:0] r_aluop;
-	reg [3:0] r_inst1;
-	reg [4:0] r_inst2; 
+	reg [4:0] r_inst1;
+	reg [4:0] r_inst2, r_IF_ID_rs1_output, r_IF_ID_rs2_output; 
 	reg [63:0] r_dreg1, r_dreg2, r_pc, r_inst_imm;
 
 	always@(*) begin
@@ -95,7 +99,6 @@ module reg_arstn_en_ID_EX #(
 			r_writeback1 <= PRESET_VAL;
 			r_writeback2 <= PRESET_VAL;
 			r_memwrite <= PRESET_VAL;
-
 			r_memread <= PRESET_VAL;
 			r_membranch <= PRESET_VAL;
 			r_alusrc <= PRESET_VAL;
@@ -104,6 +107,8 @@ module reg_arstn_en_ID_EX #(
 			r_dreg2 <= PRESET_VAL;
 			r_inst1 <= PRESET_VAL;
 			r_inst2 <= PRESET_VAL;
+			r_IF_ID_rs1_output <= PRESET_VAL;
+			r_IF_ID_rs2_output <= PRESET_VAL;			
 			r_pc <= PRESET_VAL;
 			r_inst_imm <= PRESET_VAL;
 		end else begin
@@ -118,6 +123,8 @@ module reg_arstn_en_ID_EX #(
 			r_dreg2 <= temp_dreg2;
 			r_inst1 <= temp_inst1;
 			r_inst2 <= temp_inst2;
+			r_IF_ID_rs1_output = temp_IF_ID_rs1_output;
+			r_IF_ID_rs2_output = temp_IF_ID_rs2_output;			
 			r_pc <= temp_pc;
 			r_inst_imm <= temp_inst_imm;
 		end
@@ -136,6 +143,8 @@ module reg_arstn_en_ID_EX #(
 			temp_dreg2 = dreg2_ID_EX_input;
 			temp_inst1 = inst1_ID_EX_input;
 			temp_inst2 = inst2_ID_EX_input;
+			temp_IF_ID_rs1_output = IF_ID_rs1_output;
+			temp_IF_ID_rs2_output = IF_ID_rs2_output;			
 			temp_pc = pc_ID_EX_input;
 			temp_inst_imm = inst_imm_ID_EX_input;
 		end else begin
@@ -150,6 +159,8 @@ module reg_arstn_en_ID_EX #(
 			temp_dreg2 = r_dreg2;
 			temp_inst1 = r_inst1;
 			temp_inst2 = r_inst2;
+			temp_IF_ID_rs1_output = r_IF_ID_rs1_output;
+			temp_IF_ID_rs2_output = r_IF_ID_rs2_output;
 			temp_pc = r_pc;
 			temp_inst_imm = r_inst_imm;
 		end
@@ -159,7 +170,6 @@ module reg_arstn_en_ID_EX #(
 	assign writeback2_ID_EX_output = r_writeback2;
 	assign memwrite_ID_EX_output = r_memwrite;
 	assign memread_ID_EX_output = r_memread;
-
 	assign membranch_ID_EX_output = r_membranch;
 	assign alusrc_ID_EX_output = r_alusrc;
 	assign aluop_ID_EX_output = r_aluop;
@@ -167,6 +177,8 @@ module reg_arstn_en_ID_EX #(
 	assign dreg2_ID_EX_output = r_dreg2;
 	assign inst1_ID_EX_output = r_inst1;
 	assign inst2_ID_EX_output = r_inst2;
+	assign IF_ID_rs1_output = r_IF_ID_rs1_output;	
+	assign IF_ID_rs2_output = r_IF_ID_rs2_output;
 	assign pc_ID_EX_output = r_pc;
 	assign inst_imm_ID_EX_output = r_inst_imm;
 endmodule
@@ -178,6 +190,7 @@ module reg_arstn_en_EX_MEM#(
 		input clk,        
 		input arst_n,     
 		input [63:0] branchpc_EX_MEM_input,	
+		input [63:0] jumppc_EX_MEM_input,	
 		input zero_EX_MEM_input,		
 		input [63:0] aluout_EX_MEM_input,		
 		input [63:0] dreg2_EX_MEM_input,		
@@ -193,7 +206,8 @@ module reg_arstn_en_EX_MEM#(
 
 		//	Output
 		output [63:0] dreg2_EX_MEM_output,      
-		output [63:0] branchpc_EX_MEM_output,	
+		output [63:0] branchpc_EX_MEM_output,
+		output [63:0] jumppc_EX_MEM_output,
 		output [63:0] aluout_EX_MEM_output,		
 		output zero_EX_MEM_output,				
 		output writeback1_EX_MEM_output,	
@@ -206,11 +220,11 @@ module reg_arstn_en_EX_MEM#(
 
 	reg temp_writeback1, temp_writeback2, temp_memwrite, temp_memread, temp_membranch, temp_zero;
 	reg [4:0] temp_inst2;
-	reg [63:0] temp_branchpc, temp_dreg2, temp_aluout;
+	reg [63:0] temp_branchpc, temp_jumppc, temp_dreg2, temp_aluout;
 
 	reg r_writeback1, r_writeback2, r_memwrite, r_memread, r_membranch, r_zero;
 	reg [4:0] r_inst2;
-	reg [63:0] r_branchpc, r_dreg2, r_aluout;
+	reg [63:0] r_branchpc, r_jumppc, r_dreg2, r_aluout;
 
    always@(posedge clk, negedge arst_n)begin
 		if(arst_n==0)begin
@@ -223,6 +237,7 @@ module reg_arstn_en_EX_MEM#(
 			r_dreg2 <= PRESET_VAL;
 			r_inst2 <= PRESET_VAL;
 			r_branchpc <= PRESET_VAL;
+			r_jumppc <= PRESET_VAL;
 			r_aluout <= PRESET_VAL;
 		end else begin
 			r_writeback1 <= temp_writeback1;
@@ -234,6 +249,7 @@ module reg_arstn_en_EX_MEM#(
 			r_dreg2 <= temp_dreg2;
 			r_inst2 <= temp_inst2;
 			r_branchpc <= temp_branchpc;
+			r_jumppc <= temp_jumppc;
 			r_aluout <= temp_aluout;
 		end
    end
@@ -249,6 +265,7 @@ module reg_arstn_en_EX_MEM#(
 			temp_dreg2 = dreg2_EX_MEM_input;
 			temp_inst2 = inst2_EX_MEM_input;
 			temp_branchpc = branchpc_EX_MEM_input;
+			temp_jumppc = jumppc_EX_MEM_input;
 			temp_aluout = aluout_EX_MEM_input;
 		end else begin
 			temp_writeback1 = r_writeback1;
@@ -260,6 +277,7 @@ module reg_arstn_en_EX_MEM#(
 			temp_dreg2 = r_dreg2;
 			temp_inst2 = r_inst2;
 			temp_branchpc = r_branchpc;
+			temp_jumppc = r_jumppc;
 			temp_aluout = r_aluout;
 		end
    end
@@ -273,6 +291,7 @@ module reg_arstn_en_EX_MEM#(
 	assign dreg2_EX_MEM_output = r_dreg2;
 	assign inst2_EX_MEM_output = r_inst2;
 	assign branchpc_EX_MEM_output = r_branchpc;
+	assign jumppc_EX_MEM_output = r_jumppc;
 	assign aluout_EX_MEM_output = r_aluout;
 endmodule
 
