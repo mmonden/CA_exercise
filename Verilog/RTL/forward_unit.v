@@ -20,6 +20,8 @@ module forward_unit #(
 							&& !(writeback1_EX_MEM_output && (inst2_EX_MEM_output != 0) && (inst2_EX_MEM_output == IF_ID_rs1_output)) 
 							&& (inst2_MEM_WB_output == IF_ID_rs1_output)) begin
 			mux_top = 2'b01;
+		end else begin
+			mux_top = 2'b00;
 		end
 
 		if(writeback1_EX_MEM_output && (inst2_EX_MEM_output != 4'b0) && (inst2_EX_MEM_output == IF_ID_rs2_output)) begin
@@ -28,6 +30,8 @@ module forward_unit #(
 							&& !(writeback1_EX_MEM_output && (inst2_EX_MEM_output != 0) && (inst2_EX_MEM_output == IF_ID_rs2_output)) 
 							&& (inst2_MEM_WB_output == IF_ID_rs2_output)) begin
 			mux_bottom = 2'b01;
+		end else begin 
+			mux_bottom = 2'b00;
 		end
 	end
 
