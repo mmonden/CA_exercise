@@ -71,9 +71,9 @@ pc #(
 	.arst_n    (arst_n    ),
 	.branch_pc (branch_pc ),
 	.jump_pc   (jump_pc   ),
-	.zero_flag (zero_flag ),
-	.branch    (branch    ),
-	.jump      (jump      ),
+	.zero_flag (zero_flag_EX_MEM ),
+	.branch    (branch_EX_MEM    ),
+	.jump      (branch_EX_MEM    ),
 	.current_pc(current_pc),
 	.enable    (enable    ),
 	.updated_pc(updated_pc)
@@ -143,6 +143,7 @@ reg_arstn_en_ID_EX #(
 	.writeback2_ID_EX_input		(mem_2_reg),
 	.memwrite_ID_EX_input		(mem_write),
 	.memread_ID_EX_input		(mem_read),
+	.memjump_ID_EX_input		(jump),
 	.membranch_ID_EX_input		(branch),
 	.alusrc_ID_EX_input			(alu_src),
 	.aluop_ID_EX_input			(alu_op),
@@ -161,6 +162,7 @@ reg_arstn_en_ID_EX #(
 	.writeback2_ID_EX_output		(mem_2_reg_ID_EX),
 	.memwrite_ID_EX_output		(mem_write_ID_EX),
 	.memread_ID_EX_output		(mem_read_ID_EX),
+	.memjump_ID_EX_output		(jump_ID_IX),
 	.membranch_ID_EX_output		(branch_ID_EX),
 	.alusrc_ID_EX_output			(alu_src_ID_EX),
 	.aluop_ID_EX_output			(alu_op_ID_EX)
@@ -183,6 +185,7 @@ reg_arstn_en_EX_MEM #(
 	.writeback2_EX_MEM_input	(mem_2_reg_ID_EX),
 	.memwrite_EX_MEM_input		(mem_write_ID_EX),
 	.memread_EX_MEM_input		(mem_read_ID_EX),
+	.memjump_EX_MEM_input		(jump_ID_EX),
 	.membranch_EX_MEM_input		(branch_ID_EX),
 	.en         (enable),
 
@@ -196,6 +199,7 @@ reg_arstn_en_EX_MEM #(
 	.writeback2_EX_MEM_output		(mem_2_reg_EX_MEM),
 	.memwrite_EX_MEM_output		(mem_write_EX_MEM),
 	.memread_EX_MEM_output		(mem_read_EX_MEM),
+	.memjump_EX_MEM_output		(jump_EX_MEM),
 	.membranch_EX_MEM_output		(branch_EX_MEM),
 	.inst2_EX_MEM_output		(inst2_EX_MEM)
 );
@@ -261,8 +265,8 @@ forward_unit #(
 ) forward_unit_b(
 	.writeback1_EX_MEM_output	(reg_write_EX_MEM),	
 	.writeback1_MEM_WB_output	(reg_write_MEM_WB),	
-	.inst1_ID_EX_output			(inst1_ID_EX),    
-	.inst_imm_ID_EX_output		(immediate_extended_ID_EX),
+	.IF_ID_rs1_output			(IF_ID_rs1),    
+	.IF_ID_rs2_output			(IF_ID_rs2),
 	.inst2_EX_MEM_output		(inst2_EX_MEM),   
 	.inst2_MEM_WB_output		(inst2_MEM_WB),   
 	.mux_bottom		(mux_control_B),
