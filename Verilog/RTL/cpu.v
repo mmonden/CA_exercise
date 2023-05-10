@@ -256,7 +256,7 @@ register_file #(
 alu_control alu_ctrl(
 	.func7_5      	(inst1_ID_EX[4:3]),
 	.func3          (inst1_ID_EX[2:0]),
-	.alu_op         (alu_op            ),
+	.alu_op         (alu_op_ID_EX    ),
 	.alu_control    (alu_control       )
 );
 
