@@ -87,7 +87,7 @@ module reg_arstn_en_ID_EX #(
 	reg temp_writeback1, temp_writeback2, temp_memwrite, temp_memread, temp_memjump, temp_membranch, temp_alusrc;
 	reg [1:0] temp_aluop;
 	reg [4:0] temp_inst1;
-	reg [4:0] temp_inst2, temp_IF_ID_rs1_output, temp_IF_ID_rs2_output; 
+	reg [4:0] temp_inst2, temp_IF_ID_rs1, temp_IF_ID_rs2; 
 	reg [63:0] temp_dreg1, temp_dreg2, temp_pc, temp_inst_imm;
 
 	reg r_writeback1, r_writeback2, r_memwrite, r_memread, r_memjump, r_membranch, r_alusrc;
