@@ -308,8 +308,8 @@ alu#(
 mux_2 #(
 	.DATA_W(64)
 ) regfile_data_mux (
-	.input_a  (alu_out_MEM_WB	),
-	.input_b  (alu_out_EX_MEM	),
+	.input_a  (mem_data_MEM_WB	),
+	.input_b  (alu_out_MEM_WB	),
 	.select_a (mem_2_reg_MEM_WB	),
 	.mux_out  (regfile_wdata 	)
 );
