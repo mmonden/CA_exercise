@@ -8,11 +8,11 @@ module reg_arstn_en_IF_ID #(
 		input [63:0] pc,
 		input en,
 		
-		output [DATA_W-1:0] dout,
+		output [31:0] dout,
 		output [63:0]		pcout
    );
 
-   reg [DATA_W-1:0] r_inst, inst;
+   reg [31:0] r_inst, inst;
    reg [63:0] r_pc, currpc;
 
    always@(posedge clk, negedge arst_n)begin
