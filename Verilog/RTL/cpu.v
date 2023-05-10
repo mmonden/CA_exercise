@@ -73,7 +73,7 @@ pc #(
 	.jump_pc   (jump_pc   ),
 	.zero_flag (zero_flag_EX_MEM ),
 	.branch    (branch_EX_MEM    ),
-	.jump      (branch_EX_MEM    ),
+	.jump      (jump_EX_MEM    ),
 	.current_pc(current_pc),
 	.enable    (enable    ),
 	.updated_pc(updated_pc)
@@ -194,7 +194,7 @@ reg_arstn_en_EX_MEM #(
 	.branchpc_EX_MEM_output		(branch_pc_EX_MEM),
 	.jumppc_EX_MEM_output		(jump_pc_EX_MEM),
 	.aluout_EX_MEM_output		(alu_out_EX_MEM),
-	.zero_EX_MEM_output		(zero_flag_EX_MEM),
+	.zero_EX_MEM_output			(zero_flag_EX_MEM),
 	.writeback1_EX_MEM_output		(reg_write_EX_MEM),
 	.writeback2_EX_MEM_output		(mem_2_reg_EX_MEM),
 	.memwrite_EX_MEM_output		(mem_write_EX_MEM),
