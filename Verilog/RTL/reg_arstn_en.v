@@ -93,7 +93,7 @@ module reg_arstn_en_ID_EX #(
 	reg r_writeback1, r_writeback2, r_memwrite, r_memread, r_memjump, r_membranch, r_alusrc;
 	reg [1:0] r_aluop;
 	reg [4:0] r_inst1;
-	reg [4:0] r_inst2, r_IF_ID_rs1_output, r_IF_ID_rs2_output; 
+	reg [4:0] r_inst2, r_IF_ID_rs1, r_IF_ID_rs2; 
 	reg [63:0] r_dreg1, r_dreg2, r_pc, r_inst_imm;
 
 	always@(posedge clk, negedge arst_n) begin
@@ -110,8 +110,8 @@ module reg_arstn_en_ID_EX #(
 			r_dreg2 <= PRESET_VAL;
 			r_inst1 <= PRESET_VAL;
 			r_inst2 <= PRESET_VAL;
-			r_IF_ID_rs1_output <= PRESET_VAL;
-			r_IF_ID_rs2_output <= PRESET_VAL;			
+			r_IF_ID_rs1 <= PRESET_VAL;
+			r_IF_ID_rs2 <= PRESET_VAL;			
 			r_pc <= PRESET_VAL;
 			r_inst_imm <= PRESET_VAL;
 		end else begin
@@ -127,8 +127,8 @@ module reg_arstn_en_ID_EX #(
 			r_dreg2 <= temp_dreg2;
 			r_inst1 <= temp_inst1;
 			r_inst2 <= temp_inst2;
-			r_IF_ID_rs1_output = temp_IF_ID_rs1_output;
-			r_IF_ID_rs2_output = temp_IF_ID_rs2_output;			
+			r_IF_ID_rs1 = temp_IF_ID_rs1;
+			r_IF_ID_rs2 = temp_IF_ID_rs2;			
 			r_pc <= temp_pc;
 			r_inst_imm <= temp_inst_imm;
 		end
@@ -148,8 +148,8 @@ module reg_arstn_en_ID_EX #(
 			temp_dreg2 = dreg2_ID_EX_input;
 			temp_inst1 = inst1_ID_EX_input;
 			temp_inst2 = inst2_ID_EX_input;
-			temp_IF_ID_rs1_output = IF_ID_rs1_output;
-			temp_IF_ID_rs2_output = IF_ID_rs2_output;			
+			temp_IF_ID_rs1 = IF_ID_rs1_input;
+			temp_IF_ID_rs2 = IF_ID_rs2_input;			
 			temp_pc = pc_ID_EX_input;
 			temp_inst_imm = inst_imm_ID_EX_input;
 		end else begin
@@ -165,8 +165,8 @@ module reg_arstn_en_ID_EX #(
 			temp_dreg2 = r_dreg2;
 			temp_inst1 = r_inst1;
 			temp_inst2 = r_inst2;
-			temp_IF_ID_rs1_output = r_IF_ID_rs1_output;
-			temp_IF_ID_rs2_output = r_IF_ID_rs2_output;
+			temp_IF_ID_rs1 = r_IF_ID_rs1;
+			temp_IF_ID_rs2 = r_IF_ID_rs2;
 			temp_pc = r_pc;
 			temp_inst_imm = r_inst_imm;
 		end
@@ -184,8 +184,8 @@ module reg_arstn_en_ID_EX #(
 	assign dreg2_ID_EX_output = r_dreg2;
 	assign inst1_ID_EX_output = r_inst1;
 	assign inst2_ID_EX_output = r_inst2;
-	assign IF_ID_rs1_output = r_IF_ID_rs1_output;	
-	assign IF_ID_rs2_output = r_IF_ID_rs2_output;
+	assign IF_ID_rs1_output = r_IF_ID_rs1;	
+	assign IF_ID_rs2_output = r_IF_ID_rs2;
 	assign pc_ID_EX_output = r_pc;
 	assign inst_imm_ID_EX_output = r_inst_imm;
 endmodule
