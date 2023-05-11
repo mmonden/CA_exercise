@@ -67,9 +67,9 @@ module pc#(
    );
 
    always@(*) begin
-      // if(hazard == 0) begin
+      if(hazard == 0) begin
          updated_pc = current_pc+PC_INCREASE;
-      // end
+      end
    end
 endmodule
 
