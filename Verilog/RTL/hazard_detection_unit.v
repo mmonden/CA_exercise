@@ -28,7 +28,7 @@ module hazard_detection_unit
 );
 	always@(*) begin
 		if(memread_ID_EX_input && ((inst2_ID_EX_input == IF_ID_rs1_input) || (inst2_ID_EX_input == IF_ID_rs2_input))) begin
-			alu_op_output <= 1'b0;
+			alu_op_output = 1'b0;
 			reg_dst_output <= 1'b0;
 			branch_output <= 1'b0;
 			mem_read_output <= 1'b0;

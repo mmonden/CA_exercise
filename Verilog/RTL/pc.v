@@ -19,7 +19,7 @@ module pc#(
    )(
       input  wire              clk,
       input  wire              arst_n,
-      input wire              hazard,
+      // input wire              hazard,
       input  wire              enable,
       input  wire [DATA_W-1:0] branch_pc,
       input  wire [DATA_W-1:0] jump_pc,  
@@ -67,9 +67,9 @@ module pc#(
    );
 
    always@(*) begin
-      if(hazard == 0) begin
+      // if(hazard == 0) begin
          updated_pc = current_pc+PC_INCREASE;
-      end
+      // end
    end
 endmodule
 
