@@ -56,7 +56,7 @@ wire [1:0] alu_op_ID_EX;
 wire [4:0] inst1_ID_EX;	//also includes one extra bit for the extra operation that was implemented.
 wire [4:0] inst2_ID_EX, inst2_EX_MEM, inst2_MEM_WB, IF_ID_rs1, IF_ID_rs2;
 
-wire [1:0]	mux_control_A, mux_control_B;
+wire [1:0]	mux_control_A, mux_control_B, alu_op_tomux;
 wire [63:0]	mux_output_A, mux_output_B;
 
 immediate_extend_unit immediate_extend_u(
