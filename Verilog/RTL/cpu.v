@@ -69,6 +69,7 @@ pc #(
 ) program_counter (
 	.clk       (clk       ),
 	.arst_n    (arst_n    ),
+	.hazard		(PCWrite),
 	.branch_pc (branch_pc ),
 	.jump_pc   (jump_pc   ),
 	.zero_flag (zero_flag_EX_MEM ),
@@ -116,6 +117,7 @@ reg_arstn_en_IF_ID #(
 ) signal_pipe_IF_ID (
 	.clk        (clk),
 	.arst_n     (arst_n),
+	.hazard		(IF_IDWrite),
 	.din        (instruction),
 	.pc			(current_pc),
 	.en         (enable),
@@ -228,15 +230,15 @@ reg_arstn_en_MEM_WB #(
 
 control_unit control_unit(
 	.opcode   (instruction_IF_ID[6:0]),
-	.alu_op   (alu_op          ),
-	.reg_dst  (reg_dst         ),
-	.branch   (branch          ),
-	.mem_read (mem_read        ),
-	.mem_2_reg(mem_2_reg       ),
-	.mem_write(mem_write       ),
-	.alu_src  (alu_src         ),
-	.reg_write(reg_write       ),
-	.jump     (jump            )
+	.alu_op   (alu_op_tomux),
+	.reg_dst  (reg_dst_tomux),
+	.branch   (branch_tomux),
+	.mem_read (mem_read_tomux),
+	.mem_2_reg(mem_2_reg_tomux),
+	.mem_write(mem_write_tomux),
+	.alu_src  (alu_src_tomux),
+	.reg_write(reg_write_tomux),
+	.jump     (jump_tomux)
 );
 
 register_file #(
@@ -271,6 +273,34 @@ forward_unit #(
 	.inst2_MEM_WB_output		(inst2_MEM_WB),   
 	.mux_bottom		(mux_control_B),
 	.mux_top		(mux_control_A)
+);
+
+hazard_detection_unit hazard_detection (
+	.memread_ID_EX_input	(mem_read_EX_MEM),
+	.alu_op_input 			(alu_op_tomux),
+	.reg_dst_input 			(reg_dst_tomux),
+	.branch_input 			(branch_tomux),
+	.mem_read_input 		(mem_read_tomux),	
+	.mem_2_reg_input		(mem_2_reg_tomux), 	
+	.mem_write_input		(mem_write_tomux), 	
+	.alu_src_input 			(alu_src_tomux),
+	.reg_write_input		(reg_write_tomux),	
+	.jump_input 			(jump_tomux),
+	.IF_ID_rs1_input		(IF_ID_rs1),
+	.IF_ID_rs2_input		(IF_ID_rs2),
+	.inst2_ID_EX_input		(inst2_ID_EX),
+
+	.alu_op_output   		(alu_op),
+	.reg_dst_output  		(reg_dst),
+	.branch_output   		(branch),
+	.mem_read_output 		(mem_read),
+	.mem_2_reg_output		(mem_2_reg),
+	.mem_write_output		(mem_write),
+	.alu_src_output  		(alu_src),
+	.reg_write_output		(reg_write),
+	.jump_output     		(jump),
+	.prevent_update_pc		(PCWrite),			// TODO: setup
+	.prevent_update_reg_IF_ID	(IF_IDWrite)
 );
 
 mux_3 mux_A(

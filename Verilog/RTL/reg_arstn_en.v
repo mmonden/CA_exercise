@@ -4,6 +4,7 @@ module reg_arstn_en_IF_ID #(
 	  )(
 		input clk,
 		input arst_n,
+		input hazard,
 		input [31:0] din,
 		input [63:0] pc,
 		input en,
@@ -26,13 +27,15 @@ module reg_arstn_en_IF_ID #(
    end
 
    always@(*) begin
-	  if(en == 1'b1)begin
-		 inst = din;
-		 currpc = pc;
-	  end else begin
-		 inst = r_inst;
-		 currpc = r_pc;
-	  end
+		if(hazard == 0) begin
+			if(en == 1'b1)begin
+				inst = din;
+				currpc = pc;
+			end else begin
+				inst = r_inst;
+				currpc = r_pc;
+			end
+		end
    end
 
    assign dout = r_inst;

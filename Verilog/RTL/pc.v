@@ -19,6 +19,7 @@ module pc#(
    )(
       input  wire              clk,
       input  wire              arst_n,
+      input wire              hazard,
       input  wire              enable,
       input  wire [DATA_W-1:0] branch_pc,
       input  wire [DATA_W-1:0] jump_pc,  
@@ -30,14 +31,12 @@ module pc#(
    );
 
    localparam  [DATA_W-1:0] PC_INCREASE= {{(DATA_W-3){1'b0}},3'd4};
-  
 
    wire [DATA_W-1:0] pc_r,next_pc,next_pc_i;
    reg               pc_src;
-      
 
    always@(*) pc_src = zero_flag & branch; 
-      
+
    mux_2#(
       .DATA_W(DATA_W)
    ) mux_branch( 
@@ -67,7 +66,11 @@ module pc#(
       .dout  (current_pc)
    );
 
-   always@(*) updated_pc = current_pc+PC_INCREASE;
+   always@(*) begin
+      if(hazard == 0) begin
+         updated_pc = current_pc+PC_INCREASE;
+      end
+   end
 endmodule
 
 
