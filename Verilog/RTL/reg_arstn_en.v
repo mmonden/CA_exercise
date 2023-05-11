@@ -27,13 +27,15 @@ module reg_arstn_en_IF_ID #(
    end
 
    always@(*) begin
-		if(en == 1'b1)begin
-			inst = din;
-			currpc = pc;
-		end else begin
-			inst = r_inst;
-			currpc = r_pc;
-		end
+		if(hazard == 0) begin
+			if(en == 1'b1)begin
+				inst = din;
+				currpc = pc;
+			end else begin
+				inst = r_inst;
+				currpc = r_pc;
+			end
+   		end
    end
 
    assign dout = r_inst;
