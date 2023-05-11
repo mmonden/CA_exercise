@@ -1,7 +1,7 @@
 module hazard_detection_unit
 (
 	input memread_ID_EX_input,
-	input alu_op_input,
+	input [1:0] alu_op_input,
 	input reg_dst_input,
 	input branch_input,
 	input mem_read_input,
@@ -14,7 +14,7 @@ module hazard_detection_unit
 	input wire [4:0] IF_ID_rs2_input,			// rs2
 	input wire [4:0] inst2_ID_EX_input,
 
-	output reg alu_op_output,
+	output reg [1:0] alu_op_output,
 	output reg reg_dst_output,
 	output reg branch_output,
 	output reg mem_read_output,
@@ -28,7 +28,7 @@ module hazard_detection_unit
 );
 	always@(*) begin
 		if(memread_ID_EX_input && ((inst2_ID_EX_input == IF_ID_rs1_input) || (inst2_ID_EX_input == IF_ID_rs2_input))) begin
-			alu_op_output = 1'b0;
+			alu_op_output = 2'b00;
 			reg_dst_output <= 1'b0;
 			branch_output <= 1'b0;
 			mem_read_output <= 1'b0;
