@@ -286,8 +286,8 @@ hazard_detection_unit hazard_detection (
 	.alu_src_input 			(alu_src_tomux),
 	.reg_write_input		(reg_write_tomux),	
 	.jump_input 			(jump_tomux),
-	.IF_ID_rs1_input		(IF_ID_rs1),
-	.IF_ID_rs2_input		(IF_ID_rs2),
+	.IF_ID_rs1_input		(instruction_IF_ID[19:15]),
+	.IF_ID_rs2_input		(instruction_IF_ID[24:20]),
 	.inst2_ID_EX_input		(inst2_ID_EX),
 
 	.alu_op_output   		(alu_op),
