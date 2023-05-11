@@ -19,7 +19,7 @@ module pc#(
    )(
       input  wire              clk,
       input  wire              arst_n,
-      // input wire              hazard,
+      input wire              hazard,
       input  wire              enable,
       input  wire [DATA_W-1:0] branch_pc,
       input  wire [DATA_W-1:0] jump_pc,  
