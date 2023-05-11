@@ -7,6 +7,7 @@
 ../Verilog/RTL/mux_2.v
 ../Verilog/RTL/mux_3.v
 ../Verilog/RTL/forward_unit.v
+../Verilog/RTL/hazard_detection_unit.v
 ../Verilog/RTL/pc.v
 ../Verilog/RTL/reg_arstn.v
 ../Verilog/RTL/reg_arstn_en.v
