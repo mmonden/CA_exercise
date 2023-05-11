@@ -69,6 +69,8 @@ module pc#(
    always@(*) begin
       if(hazard == 0) begin
          updated_pc = current_pc+PC_INCREASE;
+      end else begin
+         updated_pc = updated_pc;
       end
    end
 endmodule
