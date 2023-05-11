@@ -70,7 +70,7 @@ module pc#(
       if(hazard == 0) begin
          updated_pc = current_pc+PC_INCREASE;
       end else begin
-         updated_pc = updated_pc;
+         updated_pc = updated_pc-PC_INCREASE;
       end
    end
 endmodule
