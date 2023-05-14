@@ -266,9 +266,9 @@ module reg_arstn_en_EX_MEM#(
 			r_writeback1 <= temp_writeback1;
 			r_writeback2 <= temp_writeback2;
 			r_memwrite <= temp_memwrite;
-			// r_memread <= temp_memread;
+			r_memread <= temp_memread;
 			// r_memjump <= temp_memjump;
-			r_membranch <= temp_membranch;
+			// r_membranch <= temp_membranch;
 			r_zero <= temp_zero;
 			r_dreg2 <= temp_dreg2;
 			r_inst2 <= temp_inst2;
