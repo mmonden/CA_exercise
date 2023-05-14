@@ -51,7 +51,7 @@ wire [      63:0] regfile_wdata, mem_data, alu_out,
 wire signed [63:0] immediate_extended;
 
 wire [31:0]	instruction_IF_ID;
-wire [63:0] current_pc_IF_ID, regfile_rdata_1_ID_EX, regfile_rdata_2_ID_EX, regfile_rdata_2_EX_MEM, immediate_extended_ID_EX, current_pc_ID_EX, branch_pc_EX_MEM, jump_pc_EX_MEM, alu_out_EX_MEM, alu_out_MEM_WB, mem_data_MEM_WB;
+wire [63:0] current_pc_IF_ID, regfile_rdata_1_ID_EX, regfile_rdata_2_ID_EX, regfile_rdata_2_EX_MEM, immediate_extended_ID_EX, alu_out_EX_MEM, alu_out_MEM_WB, mem_data_MEM_WB; //current_pc_ID_EX, branch_pc_EX_MEM, jump_pc_EX_MEM,;
 wire [1:0] alu_op_ID_EX;
 wire [4:0] inst1_ID_EX;	//also includes one extra bit for the extra operation that was implemented.
 wire [4:0] inst2_ID_EX, inst2_EX_MEM, inst2_MEM_WB, IF_ID_rs1, IF_ID_rs2;
@@ -72,12 +72,18 @@ pc #(
 	.hazard		(PCWrite),
 	.branch_pc (branch_pc ),
 	.jump_pc   (jump_pc   ),
-	.zero_flag (zero_flag_EX_MEM ),
-	.branch    (branch_EX_MEM    ),
-	.jump      (jump_EX_MEM    ),
+	// .zero_flag (zero_flag_imposter_immediately_caculated_in_ID_stage ),
+	.branch    (branch    ),
+	.jump      (jump    ),
 	.current_pc(current_pc),
 	.enable    (enable    ),
 	.updated_pc(updated_pc)
+);
+
+branch_calc brc (
+	.regfile_rdata_1(regfile_rdata_1),
+	.regfile_rdata_2(regfile_rdata_2),
+	.eq(zero_flag_imposter_immediately_caculated_in_ID_stage)
 );
 
 sram_BW32 #(
@@ -117,6 +123,7 @@ reg_arstn_en_IF_ID #(
 ) signal_pipe_IF_ID (
 	.clk        (clk),
 	.arst_n     (arst_n),
+	.flush		(flush_ID_EX),
 	.hazard		(IF_IDWrite),
 	.din        (instruction),
 	.pc			(current_pc),
@@ -138,15 +145,15 @@ reg_arstn_en_ID_EX #(
 	.inst2_ID_EX_input		(instruction_IF_ID[11:7]),
 	.IF_ID_rs1_input		(instruction_IF_ID[19:15]),
 	.IF_ID_rs2_input		(instruction_IF_ID[24:20]),
-	.pc_ID_EX_input			(current_pc_IF_ID),
+	// .pc_ID_EX_input			(current_pc_IF_ID),
 
 	//	Control signals
 	.writeback1_ID_EX_input		(reg_write),
 	.writeback2_ID_EX_input		(mem_2_reg),
 	.memwrite_ID_EX_input		(mem_write),
 	.memread_ID_EX_input		(mem_read),
-	.memjump_ID_EX_input		(jump),
-	.membranch_ID_EX_input		(branch),
+	// .memjump_ID_EX_input		(jump),
+	// .membranch_ID_EX_input		(branch),
 	.alusrc_ID_EX_input			(alu_src),
 	.aluop_ID_EX_input			(alu_op),
 	.en         (enable),
@@ -159,13 +166,13 @@ reg_arstn_en_ID_EX #(
 	.inst2_ID_EX_output		(inst2_ID_EX),
 	.IF_ID_rs1_output		(IF_ID_rs1),
 	.IF_ID_rs2_output		(IF_ID_rs2),
-	.pc_ID_EX_output			(current_pc_ID_EX),
+	// .pc_ID_EX_output			(current_pc_ID_EX),
 	.writeback1_ID_EX_output		(reg_write_ID_EX),
 	.writeback2_ID_EX_output		(mem_2_reg_ID_EX),
 	.memwrite_ID_EX_output		(mem_write_ID_EX),
 	.memread_ID_EX_output		(mem_read_ID_EX),
-	.memjump_ID_EX_output		(jump_ID_IX),
-	.membranch_ID_EX_output		(branch_ID_EX),
+	// .memjump_ID_EX_output		(jump_ID_IX),
+	// .membranch_ID_EX_output		(branch_ID_EX),
 	.alusrc_ID_EX_output			(alu_src_ID_EX),
 	.aluop_ID_EX_output			(alu_op_ID_EX)
 );
@@ -175,9 +182,9 @@ reg_arstn_en_EX_MEM #(
 ) signal_pipe_EX_MEM (
 	.clk        (clk),
 	.arst_n     (arst_n),
-	.branchpc_EX_MEM_input	(branch_pc),
-	.jumppc_EX_MEM_input	(jump_pc),
-	.zero_EX_MEM_input		(zero_flag),
+	// .branchpc_EX_MEM_input	(branch_pc),
+	// .jumppc_EX_MEM_input	(jump_pc),
+	// .zero_EX_MEM_input		(zero_flag),
 	.aluout_EX_MEM_input	(alu_out),
 	.dreg2_EX_MEM_input		(mux_output_B),
 	.inst2_EX_MEM_input		(inst2_ID_EX),
@@ -187,22 +194,22 @@ reg_arstn_en_EX_MEM #(
 	.writeback2_EX_MEM_input	(mem_2_reg_ID_EX),
 	.memwrite_EX_MEM_input		(mem_write_ID_EX),
 	.memread_EX_MEM_input		(mem_read_ID_EX),
-	.memjump_EX_MEM_input		(jump_ID_EX),
-	.membranch_EX_MEM_input		(branch_ID_EX),
+	// .memjump_EX_MEM_input		(jump_ID_EX),
+	// .membranch_EX_MEM_input		(branch_ID_EX),
 	.en         (enable),
 
 	//	Output
 	.dreg2_EX_MEM_output		(regfile_rdata_2_EX_MEM),
-	.branchpc_EX_MEM_output		(branch_pc_EX_MEM),
-	.jumppc_EX_MEM_output		(jump_pc_EX_MEM),
+	// .branchpc_EX_MEM_output		(branch_pc_EX_MEM),
+	// .jumppc_EX_MEM_output		(jump_pc_EX_MEM),
 	.aluout_EX_MEM_output		(alu_out_EX_MEM),
-	.zero_EX_MEM_output			(zero_flag_EX_MEM),
+	// .zero_EX_MEM_output			(zero_flag_EX_MEM),
 	.writeback1_EX_MEM_output		(reg_write_EX_MEM),
 	.writeback2_EX_MEM_output		(mem_2_reg_EX_MEM),
 	.memwrite_EX_MEM_output		(mem_write_EX_MEM),
 	.memread_EX_MEM_output		(mem_read_EX_MEM),
-	.memjump_EX_MEM_output		(jump_EX_MEM),
-	.membranch_EX_MEM_output		(branch_EX_MEM),
+	// .memjump_EX_MEM_output		(jump_EX_MEM),
+	// .membranch_EX_MEM_output		(branch_EX_MEM),
 	.inst2_EX_MEM_output		(inst2_EX_MEM)
 );
 
@@ -230,6 +237,7 @@ reg_arstn_en_MEM_WB #(
 
 control_unit control_unit(
 	.opcode   (instruction_IF_ID[6:0]),
+	.branchtaken(zero_flag_imposter_immediately_caculated_in_ID_stage),
 	.alu_op   (alu_op_tomux),
 	.reg_dst  (reg_dst_tomux),
 	.branch   (branch_tomux),
@@ -238,7 +246,8 @@ control_unit control_unit(
 	.mem_write(mem_write_tomux),
 	.alu_src  (alu_src_tomux),
 	.reg_write(reg_write_tomux),
-	.jump     (jump_tomux)
+	.jump     (jump_tomux),
+	.flush_ID_EX	(flush_ID_EX)
 );
 
 register_file #(
@@ -351,8 +360,8 @@ mux_2 #(
 branch_unit#(
 	.DATA_W(64)
 )branch_unit(
-	.updated_pc         (current_pc_ID_EX        ),	// Was updated_pc (?) but is weird right?
-	.immediate_extended (immediate_extended_ID_EX),
+	.updated_pc         (current_pc_IF_ID       ),	// Was updated_pc (?) but is weird right?
+	.immediate_extended (immediate_extended ),
 	.branch_pc          (branch_pc         ),		// these are both the same actually, probably just not split up as in de pipelined picture...
 	.jump_pc            (jump_pc           )		// these are both the same actually, probably just not split up as in de pipelined picture...
 );

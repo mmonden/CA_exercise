@@ -1,5 +1,5 @@
 ncverilog(64): 15.20-s058: (c) Copyright 1995-2018 Cadence Design Systems, Inc.
-TOOL:	ncverilog	15.20-s058: Started on Apr 27, 2023 at 12:24:57 CEST
+TOOL:	ncverilog	15.20-s058: Started on May 14, 2023 at 13:12:40 CEST
 ncverilog
 	+sv
 	-f files_verilog.f
@@ -10,6 +10,9 @@ ncverilog
 		../Verilog/RTL/cpu.v
 		../Verilog/RTL/immediate_extend_unit.v
 		../Verilog/RTL/mux_2.v
+		../Verilog/RTL/mux_3.v
+		../Verilog/RTL/forward_unit.v
+		../Verilog/RTL/hazard_detection_unit.v
 		../Verilog/RTL/pc.v
 		../Verilog/RTL/reg_arstn.v
 		../Verilog/RTL/reg_arstn_en.v
@@ -21,52 +24,6 @@ ncverilog
 	+nctimescale+1ns/10ps
 	+access+rwc
 	-ALLOWREDEFINITION
-Recompiling... reason: file '../Verilog/RTL/cpu.v' is newer than expected.
-	expected: Thu Apr 27 12:23:24 2023
-	actual:   Thu Apr 27 12:24:53 2023
-file: ../Verilog/RTL/cpu.v
-	module worklib.cpu:v
-		errors: 0, warnings: 0
-		Caching library 'worklib' ....... Done
-	Elaborating the design hierarchy:
-		Caching library 'worklib' ....... Done
-ncelab: *W,DSEMEL: This SystemVerilog design will be simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
-	.dreg1_ID_EX_input      (regfile_rdata_1),
-	                                       |
-ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,130|40): port sizes differ in port connection (64/32).
-	.dreg2_ID_EX_input      (regfile_rdata_2),
-	                                       |
-ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,131|40): port sizes differ in port connection (64/32).
-	.inst2_ID_EX_output		(inst2_ID_EX),
-	                   		           |
-ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,152|33): port sizes differ in port connection (5/32).
-	.aluout_MEM_WB_input		(alu_out_EX_MEM),
-	                    		              |
-ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,202|37): port sizes differ in port connection (64/32).
-	.memreg_MEM_WB_input		(mem_data),
-	                    		        |
-ncelab: *W,CUVMPW (../Verilog/RTL/cpu.v,203|31): port sizes differ in port connection (64/32).
-	Building instance overlay tables: .................... Done
-	Generating native compiled code:
-		worklib.cpu:v <0x56156509>
-			streams:  11, words:  1521
-		worklib.cpu_tb:v <0x5989d575>
-			streams:  27, words: 53827
-	Building instance specific data structures.
-	Loading native compiled code:     .................... Done
-	Design hierarchy summary:
-		                  Instances  Unique
-		Modules:                 23      20
-		Registers:              168     165
-		Scalar wires:            47       -
-		Expanded wires:         288       5
-		Vectored wires:          60       -
-		Always blocks:           50      47
-		Initial blocks:           3       3
-		Cont. assignments:        5      35
-		Pseudo assignments:      39      39
-		Simulation timescale:  10ps
-	Writing initial simulation snapshot: worklib.reg_arstn:v
 Loading snapshot worklib.reg_arstn:v .................... Done
 ncsim: *W,DSEM2009: This SystemVerilog design is simulated as per IEEE 1800-2009 SystemVerilog simulation semantics. Use -disable_sem2009 option for turning off SV 2009 simulation semantics.
 ncsim> source /esat/micas-data/software/Cadence/incisiv_15.20.058/tools/inca/files/ncsimrc
@@ -74,11 +31,162 @@ ncsim> run
 
 Start Execution
 
-[1;34m
-Mult2 Working Correctly
+[1;31m
+Error in Mult4[          0] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000001001011000
 [0m
-         40 cycles
-Simulation complete via $finish(1) at time 32450 NS + 8
+[1;31m
+Error in Mult4[          1] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000001010110010
+[0m
+[1;31m
+Error in Mult4[          2] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000001100001100
+[0m
+[1;31m
+Error in Mult4[          3] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000000110101001
+[0m
+[1;31m
+Error in Mult4[          4] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000000111101010
+[0m
+[1;31m
+Error in Mult4[          5] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000001000101011
+[0m
+[1;31m
+Error in Mult4[          6] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000000011111010
+[0m
+[1;31m
+Error in Mult4[          7] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000000100100010
+[0m
+[1;31m
+Error in Mult4[          8] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000000101001010
+[0m
+[1;31m
+Error in Mult4[          9] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000000001001011
+[0m
+[1;31m
+Error in Mult4[         10] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000000001011010
+[0m
+[1;31m
+Error in Mult4[         11] function
+Debug info, value:    0000000000000000000000000000000000000000000000000000000000000000
+Debug info, expected: 0000000000000000000000000000000000000000000000000000000001101001
+[0m
+=== Data Memory Status ===
+Debug info, dmem[          0]:                    1
+=== Data Memory Status ===
+Debug info, dmem[          1]:                    2
+=== Data Memory Status ===
+Debug info, dmem[          2]:                    0
+=== Data Memory Status ===
+Debug info, dmem[          3]:                    0
+=== Data Memory Status ===
+Debug info, dmem[          4]:                    0
+=== Data Memory Status ===
+Debug info, dmem[          5]:                    0
+=== Data Memory Status ===
+Debug info, dmem[          6]:                    0
+=== Data Memory Status ===
+Debug info, dmem[          7]:                    0
+=== Data Memory Status ===
+Debug info, dmem[          8]:                    0
+=== Data Memory Status ===
+Debug info, dmem[          9]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         10]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         11]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         12]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         13]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         14]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         15]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         16]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         17]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         18]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         19]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         20]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         21]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         22]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         23]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         24]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         25]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         26]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         27]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         28]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         29]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         30]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         31]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         32]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         33]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         34]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         35]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         36]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         37]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         38]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         39]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         40]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         41]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         42]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         43]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         44]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         45]:                    0
+=== Data Memory Status ===
+Debug info, dmem[         46]:                    0
+          5 cycles
+Simulation complete via $finish(1) at time 33660 NS + 0
 ../Verilog/cpu_tb.v:324    $finish;
 ncsim> exit
-TOOL:	ncverilog	15.20-s058: Exiting on Apr 27, 2023 at 12:24:58 CEST  (total: 00:00:01)
+TOOL:	ncverilog	15.20-s058: Exiting on May 14, 2023 at 13:12:43 CEST  (total: 00:00:03)

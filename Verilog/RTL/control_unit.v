@@ -3,6 +3,7 @@
 
 module control_unit(
       input  wire [6:0] opcode,
+      input wire branchtaken,
       output reg  [1:0] alu_op,
       output reg        reg_dst,
       output reg        branch,
@@ -12,6 +13,7 @@ module control_unit(
       output reg        alu_src,
       output reg        reg_write,
       output reg        jump
+      output reg        flush_ID_EX,
    );
 
    // RISC-V opcode[6:0] (see RISC-V greensheet)
@@ -26,6 +28,11 @@ module control_unit(
 	parameter [1:0] ADD_OPCODE     = 2'b00;
 	parameter [1:0] SUB_OPCODE     = 2'b01;
 	parameter [1:0] R_TYPE_OPCODE  = 2'b10;
+
+    // EXTRA control session5
+    always@(*) begin
+        flush_ID_EX = branchtaken;
+    end
 
    //The behavior of the control unit can be found in Chapter 4, Figure 4.18
    always@(*)begin
@@ -59,7 +66,7 @@ module control_unit(
             reg_write = 1'b0;
             mem_read  = 1'b0;
             mem_write = 1'b0;
-            branch    = 1'b1;
+            branch    = branchtaken;
             alu_op    = SUB_OPCODE;
             jump      = 1'b0;
         end
@@ -72,7 +79,7 @@ module control_unit(
             mem_write = 1'b0;
             branch    = 1'b0;
             alu_op    = ADD_OPCODE; //do we care??
-            jump      = 1'b1;
+            jump      = branchtaken;
         end
 
         LOAD:begin
