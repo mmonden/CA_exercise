@@ -80,7 +80,7 @@ pc #(
 	.updated_pc(updated_pc)
 );
 
-branch_calc brc (
+check_equality brc (
 	.regfile_rdata_1(regfile_rdata_1),
 	.regfile_rdata_2(regfile_rdata_2),
 	.eq(zero_flag_imposter_immediately_caculated_in_ID_stage)
