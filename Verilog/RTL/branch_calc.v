@@ -1,9 +1,9 @@
 module check_equality 
 (
-    input wire [63:0] regfile_rdata_1;
-    input wire [63:0] regfile_rdata_2;
+    input wire [63:0] regfile_rdata_1,
+    input wire [63:0] regfile_rdata_2,
     
-    output reg eq;
+    output reg eq
 );
     always@(*) begin
         if(regfile_rdata_1 == regfile_rdata_2) begin

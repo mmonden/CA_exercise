@@ -12,8 +12,8 @@ module control_unit(
       output reg        mem_write,
       output reg        alu_src,
       output reg        reg_write,
-      output reg        jump
-      output reg        flush_ID_EX,
+      output reg        jump,
+      output reg        flush_ID_EX
    );
 
    // RISC-V opcode[6:0] (see RISC-V greensheet)
