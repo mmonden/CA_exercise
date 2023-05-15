@@ -18,7 +18,7 @@ module alu #(
    input   wire        [       3:0] alu_ctrl,
 	output  reg  signed [DATA_W-1:0] alu_out,
 	output  reg                      zero_flag,
-    output  reg                      overflow
+   output  reg                      overflow
    );
 
    //The alu control codes can be found
