@@ -120,6 +120,13 @@ sram_BW64 #(
 	.rdata_ext(rdata_ext_2    )
 );
 
+// mux_2 mux_flush (
+// 	.input_a	(),
+// 	.input_b	(),
+// 	.select_a	(flush_ID_EX),
+// 	.mux_out	()
+// );
+
 reg_arstn_en_IF_ID #(
 	.DATA_W(32)
 ) signal_pipe_IF_ID (
