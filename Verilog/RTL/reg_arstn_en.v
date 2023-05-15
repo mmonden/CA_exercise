@@ -19,10 +19,10 @@ module reg_arstn_en_IF_ID #(
 
    	always@(flush) begin
 		if(flush == 1) begin
-			// r_inst = PRESET_VAL;
-			// r_pc = PRESET_VAL;
-			assign dout = PRESET_VAL;
-			assign pcout = PRESET_VAL;
+			r_inst <= PRESET_VAL;
+			r_pc <= PRESET_VAL;
+			// assign dout = PRESET_VAL;
+			// assign pcout = PRESET_VAL;
 		end
    	end
 
