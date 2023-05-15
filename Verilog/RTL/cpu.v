@@ -264,7 +264,7 @@ register_file #(
 ) register_file(
 	.clk      (clk               ),
 	.arst_n   (arst_n            ),
-	.reg_write(reg_write         ),
+	.reg_write(reg_write_MEM_WB  ),
 	.raddr_1  (instruction_IF_ID[19:15]),
 	.raddr_2  (instruction_IF_ID[24:20]),
 	.waddr    (inst2_MEM_WB		 ),
