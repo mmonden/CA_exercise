@@ -23,6 +23,3 @@ module branch_unit#(
    always@(*) jump_pc             = updated_pc + immediate_extended;// - PC_INCREASE;
   
 endmodule
-
-
-
