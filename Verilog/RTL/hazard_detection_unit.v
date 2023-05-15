@@ -27,7 +27,7 @@ module hazard_detection_unit
 	output reg prevent_update_reg_IF_ID
 );
 	always@(*) begin
-		if(memread_ID_EX_input && (~(|(inst2_ID_EX_input ^ IF_ID_rs1_input)) || ~(|(inst2_ID_EX_input ^ IF_ID_rs2_input)))) begin
+		if(memread_ID_EX_input & (~|(inst2_ID_EX_input ^ IF_ID_rs1_input) | ~|(inst2_ID_EX_input ^ IF_ID_rs2_input))) begin
 			alu_op_output = 2'b00;
 			reg_dst_output = 1'b0;
 			branch_output = 1'b0;
