@@ -17,21 +17,18 @@ module reg_arstn_en_IF_ID #(
    reg [31:0] r_inst, inst;
    reg [63:0] r_pc, currpc;
 
-   	// always@(flush) begin
-	// 	if(flush == 1) begin
-	// 		r_inst <= PRESET_VAL;
-	// 		r_pc <= PRESET_VAL;
-	// 		// assign dout = PRESET_VAL;
-	// 		// assign pcout = PRESET_VAL;
-	// 	end
-   	// end
+   	always@(flush) begin
+		if(flush == 1) begin
+			din = 0;
+			pc = 0;
+			// r_inst <= PRESET_VAL;
+			// r_pc <= PRESET_VAL;
+			// assign dout = PRESET_VAL;
+			// assign pcout = PRESET_VAL;
+		end
+   	end
 
    always@(posedge clk, negedge arst_n)begin
-		if(flush == 1) begin
-			r_inst <= PRESET_VAL;
-			r_pc <= PRESET_VAL;
-		end
-
 		if(arst_n==0)begin
 			r_inst <= PRESET_VAL;
 			r_pc <= PRESET_VAL;
