@@ -369,7 +369,7 @@ mux_2 #(
 branch_unit#(
 	.DATA_W(64)
 )branch_unit(
-	.updated_pc         (current_pc_IF_ID       ),	// Was updated_pc (?) but is weird right? // current_pc_IF_ID
+	.updated_pc         (updated_pc       ),	// Was updated_pc (?) but is weird right? // current_pc_IF_ID
 	.immediate_extended (immediate_extended ),
 	.branch_pc          (branch_pc         ),		// these are both the same actually, probably just not split up as in de pipelined picture...
 	.jump_pc            (jump_pc           )		// these are both the same actually, probably just not split up as in de pipelined picture...
