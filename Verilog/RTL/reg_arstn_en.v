@@ -21,8 +21,8 @@ module reg_arstn_en_IF_ID #(
 		if(flush == 1) begin
 			inst = 0;
 			currpc = 0;
-			// r_inst <= PRESET_VAL;
-			// r_pc <= PRESET_VAL;
+			r_inst <= PRESET_VAL;
+			r_pc <= PRESET_VAL;
 			// assign dout = PRESET_VAL;
 			// assign pcout = PRESET_VAL;
 		end
