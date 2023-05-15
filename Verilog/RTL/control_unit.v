@@ -79,7 +79,7 @@ module control_unit(
             mem_write = 1'b0;
             branch    = 1'b0;
             alu_op    = ADD_OPCODE; //do we care??
-            jump      = branchtaken;
+            jump      = 1'b1;
         end
 
         LOAD:begin
