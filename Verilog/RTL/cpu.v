@@ -59,6 +59,8 @@ wire [4:0] inst2_ID_EX, inst2_EX_MEM, inst2_MEM_WB, IF_ID_rs1, IF_ID_rs2;
 wire [1:0]	mux_control_A, mux_control_B, alu_op_tomux;
 wire [63:0]	mux_output_A, mux_output_B;
 
+wire flush_ID_EX;
+
 immediate_extend_unit immediate_extend_u(
 	 .instruction         (instruction_IF_ID),
 	 .immediate_extended  (immediate_extended)
