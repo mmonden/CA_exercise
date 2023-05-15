@@ -72,7 +72,7 @@ pc #(
 	.hazard		(PCWrite),
 	.branch_pc (branch_pc ),
 	.jump_pc   (jump_pc   ),
-	// .zero_flag (zero_flag_imposter_immediately_caculated_in_ID_stage ),
+	.zero_flag (zero_flag_imposter_immediately_caculated_in_ID_stage ),
 	.branch    (branch    ),
 	.jump      (jump    ),
 	.current_pc(current_pc),
@@ -237,7 +237,7 @@ reg_arstn_en_MEM_WB #(
 
 control_unit control_unit(
 	.opcode   (instruction_IF_ID[6:0]),
-	.branchtaken(zero_flag_imposter_immediately_caculated_in_ID_stage),// & branch),//) | jump),
+	.branchtaken(zero_flag_imposter_immediately_caculated_in_ID_stage & branch),
 	.alu_op   (alu_op_tomux),
 	.reg_dst  (reg_dst_tomux),
 	.branch   (branch_tomux),

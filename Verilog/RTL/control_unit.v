@@ -36,7 +36,6 @@ module control_unit(
 
    //The behavior of the control unit can be found in Chapter 4, Figure 4.18
    always@(*)begin
-
       case(opcode)
         ALU_R:begin
             alu_src   = 1'b0;
@@ -68,7 +67,7 @@ module control_unit(
             reg_write = 1'b0;
             mem_read  = 1'b0;
             mem_write = 1'b0;
-            branch    = branchtaken;
+            branch    = 1'b1;
             alu_op    = SUB_OPCODE;
             jump      = 1'b0;
             flush_ID_EX = branchtaken;

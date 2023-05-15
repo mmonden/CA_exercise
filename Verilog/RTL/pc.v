@@ -23,7 +23,7 @@ module pc#(
 		input  wire              enable,
 		input  wire [DATA_W-1:0] branch_pc,
 		input  wire [DATA_W-1:0] jump_pc,  
-		// input  wire              zero_flag,
+		input  wire              zero_flag,
 		input  wire              branch,
 		input  wire              jump,
 		output reg  [DATA_W-1:0] updated_pc,
@@ -35,7 +35,7 @@ module pc#(
 	wire [DATA_W-1:0] pc_r,next_pc,next_pc_i;
 	reg               pc_src;
 
-	always@(*) pc_src = branch;//zero_flag & branch; 
+	always@(*) pc_src = zero_flag & branch; 
 
 	mux_2#(
 		.DATA_W(DATA_W)
