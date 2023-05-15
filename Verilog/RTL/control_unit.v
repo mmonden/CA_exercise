@@ -30,9 +30,9 @@ module control_unit(
 	parameter [1:0] R_TYPE_OPCODE  = 2'b10;
 
     // EXTRA control session5
-    always@(*) begin
-        flush_ID_EX = branchtaken;
-    end
+    // always@(*) begin
+    //     flush_ID_EX = branchtaken;
+    // end
 
    //The behavior of the control unit can be found in Chapter 4, Figure 4.18
    always@(*)begin
@@ -47,6 +47,7 @@ module control_unit(
             branch    = 1'b0;
             alu_op    = R_TYPE_OPCODE;
             jump      = 1'b0;
+            flush_ID_EX = 1'b0;
         end
           
         ALU_I:begin
@@ -58,6 +59,7 @@ module control_unit(
             branch    = 1'b0;
             alu_op    = ADD_OPCODE;
             jump      = 1'b0;
+            flush_ID_EX = 1'b0;
         end
           
         BRANCH_EQ:begin
@@ -69,6 +71,7 @@ module control_unit(
             branch    = branchtaken;
             alu_op    = SUB_OPCODE;
             jump      = 1'b0;
+            flush_ID_EX = branchtaken;
         end
 
         JUMP:begin
@@ -80,7 +83,7 @@ module control_unit(
             branch    = 1'b0;
             alu_op    = ADD_OPCODE; //do we care??
             jump      = 1'b1;
-            // flush_ID_EX = 1'b1;
+            flush_ID_EX = 1'b1;
         end
 
         LOAD:begin
@@ -92,6 +95,7 @@ module control_unit(
             branch    = 1'b0;
             alu_op    = ADD_OPCODE;
             jump      = 1'b0;
+            flush_ID_EX = 1'b0;
         end
 
         STORE:begin
@@ -103,6 +107,7 @@ module control_unit(
             branch    = 1'b0;
             alu_op    = ADD_OPCODE;
             jump      = 1'b0;
+            flush_ID_EX = 1'b0;
         end
          
          // Declare the control signals for each one of the instructions here...
@@ -115,6 +120,7 @@ module control_unit(
             branch    = 1'b0;
             alu_op    = R_TYPE_OPCODE;
             jump      = 1'b0;
+            flush_ID_EX = 1'b0;
          end
       endcase
    end
