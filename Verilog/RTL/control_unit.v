@@ -80,7 +80,7 @@ module control_unit(
             branch    = 1'b0;
             alu_op    = ADD_OPCODE; //do we care??
             jump      = 1'b1;
-            flush_ID_EX = 1'b1;
+            // flush_ID_EX = 1'b1;
         end
 
         LOAD:begin
