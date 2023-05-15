@@ -30,9 +30,9 @@ module control_unit(
 	parameter [1:0] R_TYPE_OPCODE  = 2'b10;
 
     // EXTRA control session5
-    // always@(*) begin
-    //     flush_ID_EX = branchtaken;
-    // end
+    always@(*) begin
+        flush_ID_EX = branchtaken;
+    end
 
    //The behavior of the control unit can be found in Chapter 4, Figure 4.18
    always@(*)begin
